@@ -1,24 +1,32 @@
-import logo from './logo.svg';
+import React, {useState} from 'react'
 import './App.css';
+import Navbars from './component/Navbar';
+import Movies from './component/Movies';
+import {BrowserRouter as Router,
+  Routes,
+  Route,} from 'react-router-dom';
+import MovieDetail from './component/MovieDetail';
 
 function App() {
+  const [data, setData] = useState('');
+  const searchValue = (e) =>{
+    setData(e);
+  }
+  
+  //console.log(data);
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <>
+    <Navbars  searchValue={searchValue}/>
+     <div className='container'>
+    <Router>
+      <Routes>
+          <Route exact path='/' element={<Movies filtered={data}/>} />
+          <Route  path='/MovieDetail/:id' element={<MovieDetail />} />
+      </Routes>
+    </Router> 
     </div>
+    </>
+    
   );
 }
 
